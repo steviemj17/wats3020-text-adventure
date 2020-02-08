@@ -29,6 +29,11 @@ function recordChoice(slug) {
 // `slug` in the `choiceList` Array and then will return the last `slug` in the
 // `choiceList` Array.
 
+function undoChoice() {
+    choiceList.pop();
+    let slug = choiceList[choiceList.length-1];
+    return slug;
+}
 
 
 // TODO: Create two variables: pageContent and choicesUL. Use a DOM selector
