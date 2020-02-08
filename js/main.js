@@ -31,7 +31,7 @@ function recordChoice(slug) {
 
 function undoChoice() {
     choiceList.pop();
-    let slug = choiceList[choiceList.length-1];
+    let slug = choiceList[choiceList.length - 1];
     return slug;
 }
 
