@@ -29,7 +29,9 @@ let currentPage = null;
 // method (such as querySelector or getElementByID) to set the variable 
 // pageContent to the <p> element with the ID of 'story-text' and set the
 // variable choicesUL to the <ul> element with the ID 'choices'.
-
+let pageContent = document.getElementById('story-text'); 
+let choicesUL = document.querySelector('#choices')
+ 
 // TODO: Create a function called `updatePage()` that accepts a `page` parameter
 // and handles displaying the page in three steps:
 //  1. It should set the text of the pageContent equal to page.text (the text of
@@ -40,7 +42,17 @@ let currentPage = null;
 //     page.choices[i].link.
 //  3. At the end of the function, call the function addEventListeners().
 
-
+function updatePage(newPage) {
+    pageContent.innerHTML = newPage.text;
+    choicesUL.innerHTML = '';
+    for (let choice of newPage.choices) {
+        let newLI = document.createElement('li');
+        newLI.innerHTML = choice.text;
+        newLI.setAttribute('data-slug', choice.link);
+        choicesUL.appendChild(newLI);
+    }
+    addEventListeners();
+}
 
 // TODO: Create a function called `changePage()` that accepts a parameter called
 // `slug` and which handles "turning the page" in three steps:
