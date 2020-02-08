@@ -1,4 +1,5 @@
 /* JS for WATS 3020 Text Adventure */
+
 let choiceList = ['p1'];
 let currentPage = null;
 
@@ -12,12 +13,17 @@ let currentPage = null;
 // parameter, which is the `slug` for the current page. This function will fetch
 // the current page and return a page object using the `slug` value for a key.
 
-
+function getCurrentPage(slug) {
+    let newPage = storyData[slug];
+    return newPage;
+}
 
 // TODO: Create a function called `recordChoice()` that will accept a `slug`
 // parameter and add it to the `choiceList` Array (probably using `push()`).
 
-
+function recordChoice(slug) {
+    choiceList.push(slug);
+}
 
 // TODO: Create a function called `undoChoice()` that will remove the last
 // `slug` in the `choiceList` Array and then will return the last `slug` in the
@@ -29,9 +35,10 @@ let currentPage = null;
 // method (such as querySelector or getElementByID) to set the variable 
 // pageContent to the <p> element with the ID of 'story-text' and set the
 // variable choicesUL to the <ul> element with the ID 'choices'.
-let pageContent = document.getElementById('story-text'); 
+
+let pageContent = document.getElementById('story-text');
 let choicesUL = document.querySelector('#choices')
- 
+
 // TODO: Create a function called `updatePage()` that accepts a `page` parameter
 // and handles displaying the page in three steps:
 //  1. It should set the text of the pageContent equal to page.text (the text of
@@ -52,6 +59,12 @@ function updatePage(newPage) {
         choicesUL.appendChild(newLI);
     }
     addEventListeners();
+}
+
+function changePage(slug) {
+    recordChoice(slug);
+    let currentPage = getCurrentPage(slug);
+    updatePage(currentPage);
 }
 
 // TODO: Create a function called `changePage()` that accepts a parameter called
@@ -96,7 +109,7 @@ var storyData = {
             }
         ]
     },
-    homeEnd : {
+    homeEnd: {
         text: `You return home to your comfy roost in the forest canopy and
                 enjoy a hot cup of tea!
                 <br><br>
@@ -108,7 +121,7 @@ var storyData = {
             }
         ]
     },
-    p2 : {
+    p2: {
         text: `You fly over the Farm and see a piece of cheese lying on the
                 picnic table. There are no people around that you can see. The
                 cheese looks very tasty, but you are worried there might be a
@@ -123,7 +136,7 @@ var storyData = {
             }
         ]
     },
-    p3 : {
+    p3: {
         text: `You swoop down and pluck the cheese from the table. Just as you
                 grab hold of the cheese, the farmer's cat leaps onto the table
                 ahead of you!`,
@@ -137,7 +150,7 @@ var storyData = {
             }
         ]
     },
-    basketEnd : {
+    basketEnd: {
         text: `You fly directly into a picnic basket, which slams shut behind you.
                 You are stuck until some kind human comes to open the basket.
                 But at least the cat didn't eat you!
@@ -150,7 +163,7 @@ var storyData = {
             }
         ]
     },
-    p4 : {
+    p4: {
         text: `You zoom towards the cat, who is surprised by the direct approach
                 and leaps off the table. You pull up sharply and make it over the
                 big oak tree to a safe cruising altitude. The sun is shining,
@@ -163,7 +176,7 @@ var storyData = {
             }
         ]
     },
-    p5 : {
+    p5: {
         text: `You find a secluded fence post in the middle of a large field
                 full of wildflowers. You decide this will be a wonderful place
                 to have a snack.
@@ -180,7 +193,7 @@ var storyData = {
             }
         ]
     },
-    shareCheese : {
+    shareCheese: {
         text: `You hop down to the ground and Mr. Fox helps you break the cheese
                 in half. He is very grateful to you for sharing your cheese, and
                 he gives you a lovely ribbon for your nest.
@@ -193,7 +206,7 @@ var storyData = {
             }
         ]
     },
-    p6 : {
+    p6: {
         text: `Mr. Fox approaches and says, "Hello crow! It's been so
                 long since we've seen each other. I've missed hearing your
                 lovely singing voice. Won't you sing me a tune before I go?`,
@@ -207,7 +220,7 @@ var storyData = {
             }
         ]
     },
-    dropCheeseEnd : {
+    dropCheeseEnd: {
         text: `You open your beak to sing a lovely song, and your cheese comes
                 tumbling out. Mr. Fox quickly snaps the cheese out of the air
                 as it falls and gobbles it up!
@@ -220,7 +233,7 @@ var storyData = {
             }
         ]
     },
-    p7 : {
+    p7: {
         text: `You remain silent through all of Mr. Fox's flattery. In the end,
                 he knows you won't fall for his tricks, and he leaves you alone.
                 <br><br>
@@ -249,10 +262,10 @@ let title = document.querySelector('#story-title');
 title.innerHTML = storyData.title;
 
 
-function addEventListeners(){
+function addEventListeners() {
     let choices = document.querySelectorAll('#choices li');
-    for (choice of choices){
-        choice.addEventListener('click', function(e){
+    for (choice of choices) {
+        choice.addEventListener('click', function (e) {
             console.log(`Moving to page: ${e.target.dataset.slug}`);
             changePage(e.target.dataset.slug);
         })
@@ -260,7 +273,7 @@ function addEventListeners(){
 }
 
 let undo = document.querySelector('#undo');
-undo.addEventListener('click', function(e){
+undo.addEventListener('click', function (e) {
     console.log('Undoing last choice.');
     let slug = undoChoice();
     currentPage = getCurrentPage(slug);
